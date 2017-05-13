@@ -60,7 +60,7 @@ namespace HubicTesting2._0
             const string code_challenge_method = "S256";
 
             // Creates a redirect URI using an available port on the loopback address.
-            string redirectURI = string.Format("http://{0}:{1}/", IPAddress.Loopback, GetRandomUnusedPort());
+            string redirectURI = string.Format("http://{0}:{1}/", "localhost", 59984);
             output("redirect URI: " + redirectURI);
 
             // Creates an HttpListener to listen for requests on that redirect URI.
@@ -70,11 +70,11 @@ namespace HubicTesting2._0
             http.Start();
 
 
-            //{0}?client_id={2}&redirect_uri={1}&scope={4}&response_type=code&state={3}
+            
 
 
             // Creates the OAuth 2.0 authorization request.
-            string authorizationRequest = string.Format("{0}?client_id={2}&redirect_url={1}&scope={4}&response_type=code&state={3}",
+            string authorizationRequest = string.Format("{0}?client_id={2}&redirect_uri={1}&scope={4}&response_type=code&state={3}",
                 authorizationEndpoint,
                 System.Uri.EscapeDataString(redirectURI),
                 clientID,
