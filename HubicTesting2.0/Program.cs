@@ -54,6 +54,8 @@ namespace HubicTesting2._0
             string state = randomDataBase64url(32);
             string code_verifier = randomDataBase64url(32);
             string code_challenge = base64urlencodeNoPadding(sha256(code_verifier));
+
+            string scope = "usage.r,account.r,getAllLinks.r,credentials.r,sponsorCode.r,activate.w,sponsored.r,links.drw";
             const string code_challenge_method = "S256";
 
             // Creates a redirect URI using an available port on the loopback address.
@@ -66,14 +68,16 @@ namespace HubicTesting2._0
             output("Listening..");
             http.Start();
 
+
+
+
             // Creates the OAuth 2.0 authorization request.
-            string authorizationRequest = string.Format("{0}?response_type=code&scope=usage.r,account.r,getAllLinks.r,credentials.r,sponsorCode.r,activate.w,sponsored.r,links.drw&redirect_uri={1}&client_id={2}&state={3}&code_challenge={4}&code_challenge_method={5}",
+            string authorizationRequest = string.Format("{0}?client_id={2}&redirect_url={1}&scope={4}&response_type=code&state={3}",
                 authorizationEndpoint,
                 System.Uri.EscapeDataString(redirectURI),
                 clientID,
                 state,
-                code_challenge,
-                code_challenge_method);
+                scope);
 
             // Opens request in the browser.
             System.Diagnostics.Process.Start(authorizationRequest);
@@ -86,7 +90,7 @@ namespace HubicTesting2._0
 
             // Sends an HTTP response to the browser.
             var response = context.Response;
-            string responseString = string.Format("<html><head><meta http-equiv='refresh' content='10;url=https://google.com'></head><body>Please return to the app.</body></html>");
+            string responseString = string.Format("<html><head></head><body>Please return to the app.</body></html>");
             var buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
             response.ContentLength64 = buffer.Length;
             var responseOutput = response.OutputStream;
