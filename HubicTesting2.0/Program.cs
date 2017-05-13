@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Owin;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -20,7 +21,7 @@ namespace HubicTesting2._0
         static void Main(string[] args)
         {
             Console.WriteLine("+-----------------------+");
-            Console.WriteLine("|  Sign in with Google  |");
+            Console.WriteLine("|  Sign in to   |");
             Console.WriteLine("+-----------------------+");
             Console.WriteLine("");
             Console.WriteLine("Press any key to sign in...");
@@ -31,10 +32,10 @@ namespace HubicTesting2._0
 
             Console.ReadKey();
         }
-
-        const string clientID = "api_hubic_1366206728U6faUvDSfE1iFImoFAFUIfDRbJytlaY0";
-        const string clientSecret = "gXfu3KUIO1K57jUsW7VgKmNEhOWIbFdy7r8Z2xBdZn5K6SMkMmnU4lQUcnRy5E26";
-        const string authorizationEndpoint = "https://api.hubic.com/oauth/auth";
+        //insert your own API key into the app.config. use the example as an example...
+        string clientID = ConfigurationManager.AppSettings["ClientID"];
+        string clientSecret = ConfigurationManager.AppSettings["ClientSecret"];
+        const string authorizationEndpoint = "https://api.hubic.com/oauth/auth/";
         const string tokenEndpoint = "https://api.hubic.com/oauth/token/";
         const string userInfoEndpoint = "https://api.hubic.com/1.0/account";
 
@@ -69,6 +70,7 @@ namespace HubicTesting2._0
             http.Start();
 
 
+            //{0}?client_id={2}&redirect_uri={1}&scope={4}&response_type=code&state={3}
 
 
             // Creates the OAuth 2.0 authorization request.
